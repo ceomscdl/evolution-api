@@ -42,7 +42,9 @@ async function bootstrap() {
   }
 
   const prismaRepository = new PrismaRepository(configService);
-  await prismaRepository.onModuleInit();
+  prismaRepository.onModuleInit().catch((error) => {
+    logger.error('Error conectando a la base de datos: ' + error);
+  });
 
   app.use(
     cors({
